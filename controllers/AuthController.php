@@ -13,7 +13,8 @@ final class AuthController extends Controller
         if (!empty($_SESSION['user'])) {
             $this->redirect('dashboard');
         }
-        $this->render('auth/login', ['pageTitle' => 'Connexion']);
+        // La connexion est une page publique autonome, sans le layout interne.
+        require __DIR__ . '/../views/auth/login.php';
     }
 
     public function authenticate(): void

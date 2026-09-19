@@ -1,2 +1,35 @@
-DirectoryIndex index.php
+# Configuration compatible Infinity Free et XAMPP
+DirectoryIndex index.php index.html index.htm index2.html
 Options -Indexes
+
+# Pages d'erreur Infinity Free
+ErrorDocument 403 https://errors.infinityfree.net/errors/403/
+ErrorDocument 404 https://errors.infinityfree.net/errors/404/
+ErrorDocument 500 https://errors.infinityfree.net/errors/500/
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	# Infinity Free peut transmettre le protocole dans X-Forwarded-Proto.
+	# Le second test evite une boucle quand HTTPS est termine par le proxy.
+	RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]
+	RewriteCond %{HTTPS} !=on
+	RewriteCond %{HTTP:X-Forwarded-Proto} !=https [NC]
+	RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,NE]
+
+	# L'application utilise index.php comme point d'entree MVC.
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^ index.php [L]
+</IfModule>
+
+# Ne pas exposer le code interne ni les fichiers de configuration.
+<IfModule mod_authz_core.c>
+	<FilesMatch "^(Script\.sql|README\.md|\.env|composer\.(json|lock))$">
+		Require all denied
+	</FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+	RewriteRule ^(?:config|core|controllers|models|database|views)(?:/|$) - [F,L,NC]
+</IfModule>

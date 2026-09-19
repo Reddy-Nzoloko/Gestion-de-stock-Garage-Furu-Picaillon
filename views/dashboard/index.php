@@ -1,0 +1,13 @@
+<section class="welcome-row"><div><p class="eyebrow">SYNTHÈSE DU JOUR</p><h2>Le stock, sans détour.</h2><p class="muted">Suivez les références et les mouvements qui demandent votre attention.</p></div><a class="button button-primary" href="<?= BASE_URL ?>/index.php?page=produit-form">+ Nouvelle référence</a></section>
+<section class="stat-grid">
+    <article class="stat-card"><span class="stat-label">Valeur du stock</span><strong><?= money($indicators['valeur_stock'] ?? 0) ?></strong><span class="stat-note">au prix d’achat</span></article>
+    <article class="stat-card"><span class="stat-label">Références actives</span><strong><?= e($indicators['references_actives'] ?? 0) ?></strong><span class="stat-note">produits enregistrés</span></article>
+    <article class="stat-card"><span class="stat-label">Stock faible</span><strong><?= e($indicators['stocks_faibles'] ?? 0) ?></strong><span class="stat-note">moins de <?= STOCK_LOW_THRESHOLD ?> unités</span></article>
+    <article class="stat-card stat-card-danger"><span class="stat-label">Ruptures</span><strong><?= e($indicators['ruptures'] ?? 0) ?></strong><span class="stat-note">à réapprovisionner</span></article>
+</section>
+<section class="dashboard-grid">
+    <article class="panel"><div class="panel-heading"><div><p class="eyebrow">ACTIVITÉ RÉCENTE</p><h3>Derniers mouvements</h3></div><a class="text-link" href="<?= BASE_URL ?>/index.php?page=mouvements">Tout voir →</a></div>
+        <?php if (!$movements): ?><p class="empty-state">Aucun mouvement enregistré.</p><?php else: ?><div class="movement-list"><?php foreach ($movements as $movement): ?><div class="movement-item"><span class="movement-icon <?= strtolower($movement['type_mouvement']) ?>"><?= $movement['type_mouvement'] === 'VENTE' ? '↓' : '↑' ?></span><div><strong><?= e($movement['produit_nom'] ?? 'Référence supprimée') ?></strong><small><?= e($movement['sku'] ?? '—') ?> · <?= date('d/m/Y H:i', strtotime($movement['date_mouvement'])) ?></small></div><strong class="movement-amount"><?= money($movement['montant_total']) ?></strong></div><?php endforeach; ?></div><?php endif; ?>
+    </article>
+    <article class="panel daily-panel"><p class="eyebrow">RAPPORT DU JOUR</p><h3>Flux financiers</h3><div class="daily-line"><span>Achats</span><strong><?= money($daily['achats'] ?? 0) ?></strong></div><div class="daily-line"><span>Ventes</span><strong><?= money($daily['ventes'] ?? 0) ?></strong></div><div class="daily-line daily-total"><span>Dépenses de caisse</span><strong><?= money($daily['depenses'] ?? 0) ?></strong></div><a class="button button-outline full-width" href="<?= BASE_URL ?>/index.php?page=caisse">Ouvrir la caisse</a></article>
+</section>

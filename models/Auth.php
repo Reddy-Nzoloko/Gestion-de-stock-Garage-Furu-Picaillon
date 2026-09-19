@@ -11,7 +11,7 @@ final class Auth extends Model
         if (!$user || !password_verify($password, $user['mot_de_passe'])) {
             return false;
         }
-        $_SESSION['user'] = ['id' => $user['id'], 'nom' => trim($user['prenom'] . ' ' . $user['nom']), 'role' => $user['role_nom']];
+        $_SESSION['user'] = ['id' => (int) $user['id'], 'nom' => trim($user['prenom'] . ' ' . $user['nom']), 'role' => $user['role_nom']];
         return true;
     }
 

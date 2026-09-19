@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 final class AuthController extends Controller
 {
+    public function home(): void
+    {
+        require __DIR__ . '/../views/home/index.php';
+    }
+
     public function login(): void
     {
         if (!empty($_SESSION['user'])) {

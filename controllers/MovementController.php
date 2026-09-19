@@ -12,9 +12,22 @@ final class MovementController extends Controller
     {
         try {
             $data = $_POST;
-            $data['prix_unitaire'] = $data['type_mouvement'] === 'VENTE' ? (new Product())->find((int) $data['produit_id'])['prix_vente'] : $data['prix_unitaire'];
-            (new Movement())->register($data);
-            $this->flash('success', 'Le mouvement a été enregistré et le stock a été recalculé.');
+            if (($data['type_mouvement'] ?? '') === 'ACHAT' && trim((string) ($data['prix_unitaire'] ?? '')) === '') {
+                throw new InvalidArgumentException('Le prix unitaire d’achat est obligatoire.');
+            }
+            if (($data['type_mouvement'] ?? '') === 'VENTE') {
+                $product = (new Product())->find((int) $data['produit_id']);
+                if (!$product) {
+                    throw new InvalidArgumentException('Référence introuvable.');
+                }
+                $data['prix_unitaire'] = $product['prix_vente'];
+            }
+            $movementId = (new Movement())->register($data);
+            $this->flash('success', 'Le mouvement a été enregistré, le stock et la caisse ont été recalculés.');
+            if ($data['type_mouvement'] === 'VENTE') {
+                header('Location: ' . BASE_URL . '/index.php?page=facture&id=' . $movementId);
+                exit;
+            }
         } catch (Throwable $exception) {
             $this->flash('error', $exception->getMessage());
         }

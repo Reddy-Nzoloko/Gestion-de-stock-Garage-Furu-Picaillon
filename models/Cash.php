@@ -13,6 +13,11 @@ final class Cash extends Model
         return $this->db->query('SELECT * FROM caisse ORDER BY date_operation DESC')->fetchAll();
     }
 
+    public function today(): array
+    {
+        return $this->db->query('SELECT * FROM caisse WHERE DATE(date_operation) = CURDATE() ORDER BY date_operation DESC')->fetchAll();
+    }
+
     public function register(array $data): void
     {
         $amount = (float) $data['montant'];
@@ -20,7 +25,7 @@ final class Cash extends Model
         if ($amount <= 0 || $reason === '') {
             throw new InvalidArgumentException('Le montant doit être positif et le motif est obligatoire.');
         }
-        $statement = $this->db->prepare('INSERT INTO caisse (type_operation, montant, motif, utilisateur_id) VALUES (?, ?, ?, ?)');
-        $statement->execute([$data['type_operation'], $amount, $reason, 1]);
+        $statement = $this->db->prepare('INSERT INTO caisse (type_operation, montant, motif, utilisateur_id, mouvement_id) VALUES (?, ?, ?, ?, NULL)');
+        $statement->execute([$data['type_operation'], $amount, $reason, (int) ($_SESSION['user']['id'] ?? 0)]);
     }
 }

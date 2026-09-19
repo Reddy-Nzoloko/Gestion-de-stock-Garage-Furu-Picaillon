@@ -89,21 +89,27 @@ CREATE TABLE caisse (
     montant DECIMAL(10, 2) NOT NULL,
     motif VARCHAR(255) NOT NULL, -- Explication / Motif[cite: 1]
     utilisateur_id INT NOT NULL,
+    mouvement_id INT NULL,
     date_operation DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_caisse_utilisateur FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id) ON DELETE RESTRICT,
+    CONSTRAINT fk_caisse_mouvement FOREIGN KEY (mouvement_id) REFERENCES mouvements(id) ON DELETE SET NULL,
     CONSTRAINT chk_caisse_montant_positif CHECK (montant > 0)
 ) ENGINE=InnoDB;
+
+-- Pour une base déjà installée, exécuter: database/migrate.php
 
 -- ------------------------------------------------------------
 -- 7. Données initiales
 -- ------------------------------------------------------------
 INSERT INTO roles (nom, description)
-VALUES ('Gestionnaire', 'Gestion complète du stock et de la caisse')
+VALUES ('Administrateur', 'Accès complet à tous les modules'),
+       ('Vendeur', 'Tableau de bord et mouvements uniquement'),
+       ('Dépôt', 'Même accès que le vendeur: tableau de bord et mouvements')
 ON DUPLICATE KEY UPDATE description = VALUES(description);
 
 INSERT INTO utilisateurs (role_id, nom, prenom, email, mot_de_passe)
-SELECT id, 'FURU', 'Gestionnaire', 'admin@furu.local', '$2y$12$meIPNoFKEGoeWPA/GbzO4eQTYOjCQ1p0ywlErSE9I3JogduTrc5be'
-FROM roles WHERE nom = 'Gestionnaire'
+SELECT id, 'FURU', 'Administrateur', 'admin@furu.local', '$2y$12$meIPNoFKEGoeWPA/GbzO4eQTYOjCQ1p0ywlErSE9I3JogduTrc5be'
+FROM roles WHERE nom = 'Administrateur'
 ON DUPLICATE KEY UPDATE actif = 1;
 
 INSERT INTO categories (nom)

@@ -4,6 +4,7 @@ function money(mixed $value): string { return number_format((float) $value, 2, '
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 $currentPage = $_GET['page'] ?? 'dashboard';
+$isAdmin = ($_SESSION['user']['role'] ?? '') === 'Administrateur';
 ?>
 <!doctype html>
 <html lang="fr">
@@ -11,6 +12,8 @@ $currentPage = $_GET['page'] ?? 'dashboard';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($pageTitle ?? APP_NAME) ?> | <?= e(APP_NAME) ?></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { cream: '#f4f1ea', paper: '#fffdf8', navy: '#102942', 'navy-soft': '#29445f', danger: '#c53636' }, fontFamily: { display: ['Georgia', 'serif'], sans: ['Arial', 'sans-serif'] } } } };</script>
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/style.css">
 </head>
 <body>
@@ -21,7 +24,7 @@ $currentPage = $_GET['page'] ?? 'dashboard';
             <a class="nav-link <?= $currentPage === 'dashboard' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=dashboard"><span>▦</span> Tableau de bord</a>
             <a class="nav-link <?= in_array($currentPage, ['produits', 'produit-form'], true) ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=produits"><span>▤</span> Inventaire</a>
             <a class="nav-link <?= $currentPage === 'mouvements' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=mouvements"><span>↕</span> Mouvements</a>
-            <a class="nav-link <?= $currentPage === 'caisse' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=caisse"><span>$</span> Caisse</a>
+            <?php if ($isAdmin): ?><a class="nav-link <?= $currentPage === 'caisse' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=caisse"><span>$</span> Caisse</a><a class="nav-link <?= $currentPage === 'rapport' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=rapport"><span>▧</span> Rapport du jour</a><a class="nav-link <?= $currentPage === 'categories' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=categories"><span>◇</span> Catégories</a><a class="nav-link <?= $currentPage === 'utilisateurs' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=utilisateurs"><span>◎</span> Utilisateurs</a><?php endif; ?>
         </nav>
         <div class="sidebar-footer">Gestion interne<br><strong>Version 1.0</strong></div>
     </aside>

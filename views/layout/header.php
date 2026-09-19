@@ -21,6 +21,7 @@ $isAdmin = ($_SESSION['user']['role'] ?? '') === 'Administrateur';
     <aside class="sidebar">
         <a class="brand" href="<?= BASE_URL ?>/index.php"><span class="brand-mark">F</span><span>FURU <small>/ HAOJUE</small></span></a>
         <nav aria-label="Navigation principale">
+            <?php if ($isAdmin): ?><a class="nav-link <?= $currentPage === 'backup' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=backup"><span>↓</span> Sauvegarder la base</a><a class="nav-link <?= $currentPage === 'utilisateur-delete-page' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=utilisateur-delete-page"><span>×</span> Supprimer un compte</a><?php endif; ?>
             <a class="nav-link <?= $currentPage === 'dashboard' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=dashboard"><span>▦</span> Tableau de bord</a>
             <a class="nav-link <?= in_array($currentPage, ['produits', 'produit-form'], true) ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=produits"><span>▤</span> Inventaire</a>
             <a class="nav-link <?= $currentPage === 'mouvements' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=mouvements"><span>↕</span> Mouvements</a>
@@ -29,6 +30,7 @@ $isAdmin = ($_SESSION['user']['role'] ?? '') === 'Administrateur';
         <div class="sidebar-footer">Gestion interne<br><strong>Version 1.0</strong></div>
     </aside>
     <main class="main-content">
+        <div class="account-actions"><a href="<?= BASE_URL ?>/index.php?page=password">Changer mon mot de passe</a></div>
         <header class="topbar"><div><p class="eyebrow">GARAGE FURU / HAOJUE</p><h1><?= e($pageTitle ?? '') ?></h1></div><div class="user-chip"><span class="avatar">G</span><span><?= e($_SESSION['user']['nom'] ?? 'Gestionnaire') ?></span><a class="text-link" href="<?= BASE_URL ?>/index.php?page=logout">Quitter</a></div></header>
         <?php if ($flash): ?><div class="alert alert-<?= e($flash['type']) ?>" role="status"><?= e($flash['message']) ?></div><?php endif; ?>
         <div class="page-content">

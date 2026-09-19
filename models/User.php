@@ -31,4 +31,25 @@ final class User extends Model
         $statement = $this->db->prepare('INSERT INTO utilisateurs (role_id, nom, prenom, email, mot_de_passe) VALUES (?, ?, ?, ?, ?)');
         $statement->execute([$roleId, $nom, $prenom ?: null, $email, password_hash($password, PASSWORD_DEFAULT)]);
     }
+
+    public function delete(int $userId, int $currentUserId): void
+    {
+        if ($userId < 1 || $userId === $currentUserId) {
+            throw new InvalidArgumentException('Vous ne pouvez pas supprimer votre propre compte.');
+        }
+        $statement = $this->db->prepare('SELECT r.nom FROM utilisateurs u JOIN roles r ON r.id = u.role_id WHERE u.id = ?');
+        $statement->execute([$userId]);
+        $role = $statement->fetchColumn();
+        if (!$role) {
+            throw new InvalidArgumentException('Utilisateur introuvable.');
+        }
+        if ($role === 'Administrateur') {
+            $count = (int) $this->db->query("SELECT COUNT(*) FROM utilisateurs u JOIN roles r ON r.id = u.role_id WHERE r.nom = 'Administrateur' AND u.actif = 1")->fetchColumn();
+            if ($count <= 1) {
+                throw new InvalidArgumentException('Le dernier administrateur ne peut pas être supprimé.');
+            }
+        }
+        $delete = $this->db->prepare('DELETE FROM utilisateurs WHERE id = ?');
+        $delete->execute([$userId]);
+    }
 }

@@ -14,6 +14,7 @@ require_once __DIR__ . '/models/Dashboard.php';
 require_once __DIR__ . '/models/Auth.php';
 require_once __DIR__ . '/models/User.php';
 require_once __DIR__ . '/models/Category.php';
+require_once __DIR__ . '/models/Backup.php';
 require_once __DIR__ . '/controllers/DashboardController.php';
 require_once __DIR__ . '/controllers/ProductController.php';
 require_once __DIR__ . '/controllers/MovementController.php';
@@ -22,6 +23,7 @@ require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/UserController.php';
 require_once __DIR__ . '/controllers/CategoryController.php';
 require_once __DIR__ . '/controllers/ReportController.php';
+require_once __DIR__ . '/controllers/BackupController.php';
 
 $page = $_GET['page'] ?? 'home';
 $routes = [
@@ -29,8 +31,13 @@ $routes = [
     'login' => [AuthController::class, 'login'],
     'authenticate' => [AuthController::class, 'authenticate'],
     'logout' => [AuthController::class, 'logout'],
+    'password' => [AuthController::class, 'password'],
+    'password-save' => [AuthController::class, 'passwordSave'],
+    'backup' => [BackupController::class, 'download'],
     'utilisateurs' => [UserController::class, 'index'],
     'utilisateur-save' => [UserController::class, 'save'],
+    'utilisateur-delete' => [UserController::class, 'delete'],
+    'utilisateur-delete-page' => [UserController::class, 'deletions'],
     'categories' => [CategoryController::class, 'index'],
     'categorie-save' => [CategoryController::class, 'save'],
     'dashboard' => [DashboardController::class, 'index'],
@@ -51,8 +58,8 @@ if (!in_array($page, ['home', 'login', 'authenticate'], true) && empty($_SESSION
 }
 
 $publicPages = ['home', 'login', 'authenticate'];
-$adminPages = ['utilisateurs', 'utilisateur-save', 'categories', 'categorie-save', 'produits', 'produit-form', 'produit-save', 'produit-delete', 'caisse', 'caisse-save', 'rapport'];
-$operatorPages = ['dashboard', 'mouvements', 'mouvement-save', 'facture'];
+$adminPages = ['utilisateurs', 'utilisateur-save', 'utilisateur-delete', 'utilisateur-delete-page', 'categories', 'categorie-save', 'produits', 'produit-form', 'produit-save', 'produit-delete', 'caisse', 'caisse-save', 'rapport', 'backup'];
+$operatorPages = ['dashboard', 'mouvements', 'mouvement-save', 'facture', 'password', 'password-save'];
 if (!in_array($page, $publicPages, true) && !empty($_SESSION['user'])) {
     $role = $_SESSION['user']['role'] ?? '';
     if (in_array($page, $adminPages, true) && $role !== 'Administrateur') {

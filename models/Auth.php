@@ -19,4 +19,19 @@ final class Auth extends Model
     {
         unset($_SESSION['user']);
     }
+
+    public function changePassword(int $userId, string $currentPassword, string $newPassword): void
+    {
+        if (strlen($newPassword) < 8) {
+            throw new InvalidArgumentException('Le nouveau mot de passe doit contenir au moins 8 caractères.');
+        }
+        $statement = $this->db->prepare('SELECT mot_de_passe FROM utilisateurs WHERE id = ? AND actif = 1');
+        $statement->execute([$userId]);
+        $hash = $statement->fetchColumn();
+        if (!$hash || !password_verify($currentPassword, $hash)) {
+            throw new InvalidArgumentException('Le mot de passe actuel est incorrect.');
+        }
+        $update = $this->db->prepare('UPDATE utilisateurs SET mot_de_passe = ? WHERE id = ?');
+        $update->execute([password_hash($newPassword, PASSWORD_DEFAULT), $userId]);
+    }
 }

@@ -12,6 +12,8 @@ $isAdmin = ($_SESSION['user']['role'] ?? '') === 'Administrateur';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($pageTitle ?? APP_NAME) ?> | <?= e(APP_NAME) ?></title>
+    <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>/public/assets/favicon.ico">
+    <link rel="icon" type="image/png" href="<?= BASE_URL ?>/public/assets/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { theme: { extend: { colors: { cream: '#f4f1ea', paper: '#fffdf8', navy: '#102942', 'navy-soft': '#29445f', danger: '#c53636' }, fontFamily: { display: ['Georgia', 'serif'], sans: ['Arial', 'sans-serif'] } } } };</script>
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/style.css">
@@ -19,7 +21,7 @@ $isAdmin = ($_SESSION['user']['role'] ?? '') === 'Administrateur';
 <body>
 <div class="app-shell">
     <aside class="sidebar">
-        <a class="brand" href="<?= BASE_URL ?>/index.php"><span class="brand-mark">F</span><span>FURU <small>/ HAOJUE</small></span></a>
+        <a class="brand" href="<?= BASE_URL ?>/index.php"><img class="brand-logo" src="<?= BASE_URL ?>/public/assets/logo.png" alt="Logo FURU"><span>FURU <small>/ HAOJUE</small></span></a>
         <nav aria-label="Navigation principale">
             <?php if ($isAdmin): ?><a class="nav-link <?= $currentPage === 'backup' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=backup"><span>↓</span> Sauvegarder la base</a><a class="nav-link <?= $currentPage === 'utilisateur-delete-page' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=utilisateur-delete-page"><span>×</span> Supprimer un compte</a><?php endif; ?>
             <a class="nav-link <?= $currentPage === 'dashboard' ? 'is-active' : '' ?>" href="<?= BASE_URL ?>/index.php?page=dashboard"><span>▦</span> Tableau de bord</a>

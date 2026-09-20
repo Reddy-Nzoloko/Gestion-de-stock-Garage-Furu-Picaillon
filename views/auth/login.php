@@ -1,6 +1,49 @@
 <?php
 if (!function_exists('e')) {
-	function e(mixed $value): string { return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8'); }
+	function e(mixed $value): string
+	{
+		return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+	}
+}
+$flash = $_SESSION['flash'] ?? null;
+unset($_SESSION['flash']);
+?>
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Connexion | <?= e(APP_NAME) ?></title>
+	<link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>/public/assets/favicon.ico">
+	<link rel="icon" type="image/png" href="<?= BASE_URL ?>/public/assets/favicon.png">
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>tailwind.config = { theme: { extend: { colors: { cream: '#f4f1ea', paper: '#fffdf8', navy: '#102942', danger: '#c53636' } } } };</script>
+	<link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/style.css">
+</head>
+<body class="min-h-screen bg-navy px-5 py-8 text-navy">
+<main class="mx-auto grid min-h-[calc(100vh-4rem)] max-w-5xl overflow-hidden bg-paper shadow-2xl lg:grid-cols-[.9fr_1.1fr]">
+	<section class="hidden bg-navy p-12 text-paper lg:flex lg:flex-col lg:justify-between">
+		<a href="<?= BASE_URL ?>/index.php?page=home" class="flex items-center gap-3 text-sm font-bold tracking-[.16em]"><img class="h-12 w-12 object-contain bg-paper p-1" src="<?= BASE_URL ?>/public/assets/logo.png" alt="Logo FURU"><span>FURU <small class="opacity-70">/ HAOJUE</small></span></a>
+		<div><p class="mb-5 text-[10px] font-bold tracking-[.2em] text-paper/60">ESPACE GESTIONNAIRE</p><h1 class="font-display text-5xl leading-tight">Le contrôle du garage, à portée de main.</h1></div>
+		<p class="font-sans text-xs text-paper/60">Gestion interne · Version 1.0</p>
+	</section>
+	<section class="flex items-center p-8 sm:p-14">
+		<div class="w-full max-w-md">
+			<a href="<?= BASE_URL ?>/index.php?page=home" class="mb-14 inline-flex items-center gap-3 text-sm font-bold tracking-[.16em] lg:hidden"><img class="h-10 w-10 object-contain" src="<?= BASE_URL ?>/public/assets/logo.png" alt="Logo FURU">FURU <small>/ HAOJUE</small></a>
+			<p class="mb-3 font-sans text-[10px] font-bold tracking-[.2em] text-navy-soft">ESPACE GESTIONNAIRE</p>
+			<h1 class="font-display text-4xl">Bienvenue.</h1>
+			<p class="mt-3 font-sans text-sm text-slate-500">Connectez-vous pour gérer le stock et la caisse.</p>
+			<?php if ($flash): ?><div class="mt-6 border border-danger p-3 font-sans text-sm text-danger"><?= e($flash['message']) ?></div><?php endif; ?>
+			<form method="post" action="<?= BASE_URL ?>/index.php?page=authenticate" class="mt-8 grid gap-5">
+				<label class="grid gap-2 font-sans text-xs font-bold text-navy-soft">Email<input class="h-11 border border-[#d9d6cf] bg-paper px-3 outline-none focus:border-navy" required type="email" name="email" autocomplete="username"></label>
+				<label class="grid gap-2 font-sans text-xs font-bold text-navy-soft">Mot de passe<input class="h-11 border border-[#d9d6cf] bg-paper px-3 outline-none focus:border-navy" required type="password" name="password" autocomplete="current-password"></label>
+				<button class="h-11 bg-navy font-sans text-xs font-bold text-paper transition hover:bg-navy-soft" type="submit">Se connecter</button>
+			</form>
+		</div>
+	</section>
+</main>
+</body>
+</html>
 }
 ?>
 <!doctype html>

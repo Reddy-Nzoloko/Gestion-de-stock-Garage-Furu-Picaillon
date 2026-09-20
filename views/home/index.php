@@ -7,6 +7,8 @@ function e(mixed $value): string { return htmlspecialchars((string) $value, ENT_
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e(APP_NAME) ?> | Gestion de stock</title>
+    <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>/public/assets/favicon.ico">
+    <link rel="icon" type="image/png" href="<?= BASE_URL ?>/public/assets/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { theme: { extend: { colors: { cream: '#f4f1ea', paper: '#fffdf8', navy: '#102942', 'navy-soft': '#29445f', danger: '#c53636' } } } };</script>
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/style.css">
@@ -14,7 +16,7 @@ function e(mixed $value): string { return htmlspecialchars((string) $value, ENT_
 <body class="bg-cream text-navy">
     <header class="border-b border-[#d9d6cf] bg-paper">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
-            <a href="<?= BASE_URL ?>/index.php?page=home" class="flex items-center gap-3 text-sm font-bold tracking-[.16em]"><span class="grid h-10 w-10 place-items-center bg-navy text-lg text-paper">F</span><span>FURU <small class="text-[10px] opacity-60">/ HAOJUE</small></span></a>
+            <a href="<?= BASE_URL ?>/index.php?page=home" class="flex items-center gap-3 text-sm font-bold tracking-[.16em]"><img class="public-logo" src="<?= BASE_URL ?>/public/assets/logo.png" alt="Logo FURU"><span>FURU <small class="text-[10px] opacity-60">/ HAOJUE</small></span></a>
             <nav class="hidden items-center gap-8 font-sans text-xs font-bold text-navy-soft md:flex"><a href="#vision" class="transition hover:text-navy">Notre vision</a><a href="#modules" class="transition hover:text-navy">Fonctionnalités</a><a href="<?= BASE_URL ?>/index.php?page=login" class="border border-navy px-5 py-3 text-navy transition hover:bg-navy hover:text-paper">Accéder à l’espace</a></nav>
             <a href="<?= BASE_URL ?>/index.php?page=login" class="border border-navy px-4 py-2 font-sans text-xs font-bold md:hidden">Connexion</a>
         </div>

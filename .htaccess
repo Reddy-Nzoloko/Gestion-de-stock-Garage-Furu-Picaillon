@@ -1,6 +1,8 @@
 # Configuration compatible Infinity Free et XAMPP
 DirectoryIndex index.php index.html index.htm index2.html
 Options -Indexes
+AddType image/png .png
+AddType image/x-icon .ico
 
 # Pages d'erreur Infinity Free
 ErrorDocument 403 https://errors.infinityfree.net/errors/403/

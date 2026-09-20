@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 768" role="img" aria-labelledby="title desc">
+  <title id="title">Logo Garage FURU</title>
+  <desc id="desc">Lettre W rouge stylisee</desc>
+  <defs>
+    <linearGradient id="red" x1="0" y1="0" x2=".75" y2="1">
+      <stop offset="0" stop-color="#ff1b24"/>
+      <stop offset=".58" stop-color="#ed0711"/>
+      <stop offset="1" stop-color="#8e0008"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#red)" d="M112 162c-8-24 10-48 36-48h91c20 0 38 12 46 30l99 229 77-127c10-17 34-17 44 0l77 127 99-229c8-18 26-30 46-30h91c26 0 44 24 36 48L607 568c-14 44-74 50-96 9L483 473l-43 104c-22 41-82 35-96-9L112 162Z"/>
+  <path fill="#a3000b" opacity=".7" d="M112 162 259 568c10 29 41 42 69 31L178 162h-66Zm544 0L509 599c28 11 59-2 69-31l147-406h-69Z"/>
+</svg>

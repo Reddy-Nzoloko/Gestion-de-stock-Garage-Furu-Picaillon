@@ -24,10 +24,8 @@ final class MovementController extends Controller
             }
             $movementId = (new Movement())->register($data);
             $this->flash('success', 'Le mouvement a été enregistré, le stock et la caisse ont été recalculés.');
-            if ($data['type_mouvement'] === 'VENTE') {
-                header('Location: ' . BASE_URL . '/index.php?page=facture&id=' . $movementId);
-                exit;
-            }
+            header('Location: ' . BASE_URL . '/index.php?page=facture&id=' . $movementId . '&format=a4');
+            exit;
         } catch (Throwable $exception) {
             $this->flash('error', $exception->getMessage());
         }

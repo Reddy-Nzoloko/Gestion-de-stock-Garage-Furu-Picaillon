@@ -60,7 +60,8 @@ h1, h2, h3, p { margin-top: 0; } h1 { margin-bottom: 0; font-size: 27px; font-we
 @media (max-width: 900px) { .sidebar { width: 70px; padding: 22px 9px; } .brand { margin: 0 auto 42px; } .brand > span:last-child, .nav-link { font-size: 0; } .nav-link { justify-content: center; padding: 13px 0; } .nav-link span { font-size: 18px; } .sidebar-footer { display: none; } .stat-grid { grid-template-columns: repeat(2, 1fr); } .dashboard-grid, .form-layout, .cash-layout { grid-template-columns: 1fr; } }
 @media (max-width: 620px) { .topbar { padding: 22px 18px; } .page-content { padding: 25px 18px 45px; } .welcome-row, .toolbar, .section-intro { align-items: stretch; flex-direction: column; } .stat-grid { gap: 8px; } .stat-card { min-height: 124px; padding: 15px; } .stat-card strong { font-size: 22px; } .form-grid, .form-grid.three, .user-admin-layout, .role-legend { grid-template-columns: 1fr; } .search-form { display: grid; } .search-form select { width: 100%; } .form-actions { flex-direction: column-reverse; } .form-actions .button { width: 100%; } h1 { font-size: 22px; } }
 @media (max-width: 900px) { .report-grid { grid-template-columns: 1fr; } }
-.document-brand img { width: 34px; height: 34px; object-fit: contain; }
+.document-brand img { width: 72px; height: 72px; object-fit: contain; }
+.button-small { min-height: 32px; padding: 0 10px; font-size: 10px; }
 .document-actions { flex-wrap: wrap; }
 .invoice-pos80 .document-sheet { width: 80mm; padding: 6mm; }
 .invoice-pos50 .document-sheet { width: 50mm; padding: 4mm; }

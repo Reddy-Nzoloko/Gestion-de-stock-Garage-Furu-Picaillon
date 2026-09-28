@@ -24,4 +24,4 @@ define('DB_NAME', $configValue('GARAGE_DB_NAME', $configValue('DB_NAME', 'garage
 define('DB_USER', $configValue('GARAGE_DB_USER', $configValue('DB_USER', 'root')));
 define('DB_PASSWORD', $configValue('GARAGE_DB_PASSWORD', $configValue('DB_PASSWORD')));
 const STOCK_LOW_THRESHOLD = 10;
-const CURRENCY = '$';
+const CURRENCY = '$';// pERMISSION 
